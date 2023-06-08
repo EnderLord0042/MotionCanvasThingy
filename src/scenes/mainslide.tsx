@@ -158,8 +158,6 @@ export default makeScene2D(function* (view) {
     </Rect>
   );
 
-  const gravityLatex = createRef<Layout>();
-
   view.add(
     <Rect ref={gravityLatex}>
       <Latex
@@ -444,4 +442,6 @@ export default makeScene2D(function* (view) {
   yield* topTenTitleRect().y(-500, 0.5)
 
   yield* topTenList().opacity(1, 0.5)
+
+  yield* beginSlide('K2-18 b');
 });
