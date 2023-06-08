@@ -1,5 +1,5 @@
 import {Circle, Gradient, Img, Latex, Layout, Rect, Txt, makeScene2D} from '@motion-canvas/2d';
-import {all, beginSlide, createRef, createSignal, linear, loop, makeRef, range, sequence, sin, cos, startPlayback, useRandom, slideTransition, Direction, waitFor} from '@motion-canvas/core';
+import {all, beginSlide, createRef, createSignal, linear, loop, makeRef, range, sequence, sin, cos, startPlayback, useRandom, slideTransition, Direction, waitFor, Center} from '@motion-canvas/core';
 
 import exoplanetdatabase from '../images/exoplanetdatabase.png';
 import datatable from '../images/datatable.png';
@@ -125,46 +125,93 @@ export default makeScene2D(function* (view) {
     </Rect>
   );
 
-  const gravityLatex = createRef<Layout>();
+  const gravityLatex = createRef<Rect>();
+
+  const fmaEquation = createRef<Latex>();
+  const fmaLable = createRef<Txt>();
+  const gravEquation = createRef<Latex>();
+  const gravLable = createRef<Txt>();
+  const subbedFmaEquation = createRef<Latex>();
+  const subbedGravEquation = createRef<Latex>();
+  const combinedEquation = createRef<Latex>();
+  const combinedEquation2 = createRef<Latex>();
+  const planetEarthRatio = createRef<Latex>();
 
   view.add(
-    <Layout opacity={0} ref={gravityLatex}>
+    <Rect ref={gravityLatex}>
       <Latex
+      ref={fmaEquation}
       tex="{\color{white} F=ma}"
-      y={0}
+      opacity={0}
+      position={[-450,-350]}
       width={400} // height and width can calculate based on each other
       />,
+      <Txt fontFamily={'Atkinson Hyperlegible'}
+      ref={fmaLable}
+      fontSize={80} 
+      position={[-450,-150]}
+      opacity={0}
+      fill={'#FFFFFF'}>
+        Force Equation
+      </Txt>
+      ,
       <Latex
+      ref={gravEquation}
       tex="{\color{white} F=G\frac{m_{1} \cdot m_{2}}{d^{2}}}"
-      y={0}
+      opacity={0}
+      scale={1.4}
+      position={[430,-350]}
       width={400} // height and width can calculate based on each other
       />,
+      <Txt fontFamily={'Atkinson Hyperlegible'}
+      ref={gravLable}
+      fontSize={80} 
+      position={[450,-150]}
+      opacity={0}
+      textAlign={'center'}
+      fill={'#FFFFFF'}>
+        Universal Gravitation&#10;Equation
+      </Txt>
+      ,
       <Latex
+      ref={subbedFmaEquation}
       tex="{\color{white} F=m_{o}a}"
-      y={0}
+      opacity={0}
+      position={[-450,-150]}
       width={400} // height and width can calculate based on each other
       />,
       <Latex
-      tex="{\color{white} F=G\frac{m_{o} \cdot m_{p}}{d^{2}}}"
-      y={0}
+      ref={subbedGravEquation}
+      tex="{\color{white} F=G\frac{m_{o} \cdot m_{p}}{{r_{p}}^{2}}}"
+      opacity={0}
+      position={[400,-140]}
       width={400} // height and width can calculate based on each other
       />,
       <Latex
-      tex="{\color{white} m_{o}a=G\frac{m_{o} \cdot m_{p}}{d^{2}}}"
-      y={0}
+      ref={combinedEquation}
+      tex="{\color{white} m_{o}a=G\frac{m_{o} \cdot m_{p}}{{r_{p}}^{2}}}"
+      opacity={0}
+      y={100}
+      scale={1.6}
       width={400} // height and width can calculate based on each other
       />,
       <Latex
-      tex="{\color{white} a=G\frac{m_{p}}{r_{p}^{2}}"
-      y={0}
+      ref={combinedEquation2}
+      tex="{\color{white} a=G\frac{m_{p}}{{r_{p}}^{2}}}"
+      opacity={0}
+      y={200}
+      x={-500}
       width={400} // height and width can calculate based on each other
       />,
       <Latex
-      tex="{\color{white} \frac{\frac{m_{p}}{r_{p}^{2}}}{\frac{m_{e}}{r_{e}^{2}}}=\frac{\frac{m_{p}}{r_{p}^{2}}}{1}=\frac{m_{p}}{r_{p}^{2}}"
-      y={0}
+      ref={planetEarthRatio}
+      tex="{\color{white} \frac{G\frac{m_{p}}{{r_{p}}^{2}}}{G\frac{m_{e}}{{r_{e}}^{2}}}=\frac{\frac{m_{p}}{{r_{p}}^{2}}}{1}=\frac{m_{p}}{{r_{p}}^{2}}}"
+      opacity={0}
+      y={200}
+      x={500}
       width={400} // height and width can calculate based on each other
       />,
-    </Layout>
+    </Rect>
   );
   
   yield* slideTransition(Direction.Right);
@@ -182,11 +229,54 @@ export default makeScene2D(function* (view) {
   yield* datatableimg().opacity(0);
   yield* planetattributelist().opacity(1);
 
+  /* -------------- Gravity -------------- */
+
   yield* beginSlide('Gravity');
   yield* planetattributelist().opacity(0, 0.5);
   yield* gravityTitleRect().y(-500, 0.5)
 
-  yield* gravityLatex().opacity(1, 0.5)
+
+  yield* beginSlide('Fundemental Equations');
+  yield fmaEquation().opacity(1,0.6);
+  yield fmaEquation().position.y(-250,0.6);
+
+  yield* waitFor(0.2)
+  yield gravEquation().opacity(1,0.6);
+  yield gravEquation().position.y(-230,0.6);
+
+  yield* waitFor(0.2)
+
+  yield fmaLable().opacity(1,0.6);
+  yield fmaLable().position.y(-50,0.6);
+  yield gravLable().opacity(1,0.6);
+  yield* gravLable().position.y(-50,0.6);
+
+
+  yield* beginSlide('Label Out, Next Equations');
+
+  yield fmaLable().opacity(0,0.6);
+  yield fmaLable().position.y(-150,0.6);
+
+  yield gravLable().opacity(0,0.6);
+  yield gravLable().position.y(-150,0.6);
+
+  yield* waitFor(0.4)
+
+  yield subbedFmaEquation().opacity(1,0.6);
+  yield subbedFmaEquation().position.y(-50,0.6);
+
+  yield* waitFor(0.2)
+
+  yield subbedGravEquation().opacity(1,0.6);
+  yield* subbedGravEquation().position.y(-30,0.6);
+
+
+  yield* beginSlide('Combined Equation 1');
+
+  yield combinedEquation().opacity(1,0.6);
+  yield* combinedEquation().position.y(200,0.6);
+
+  /* --------- Distance From Earth --------- */
 
   yield* beginSlide('Distance from Earth');
 
