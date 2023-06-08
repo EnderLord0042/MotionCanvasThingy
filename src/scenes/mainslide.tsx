@@ -148,6 +148,18 @@ export default makeScene2D(function* (view) {
     </Rect>
   );
 
+  const topTenTitleRect = createRef<Rect>();
+  
+  view.add(
+    <Rect layout fill={'#77B2BA'} padding={10} y={-580} ref={topTenTitleRect}>
+      <Txt fontFamily={'Atkinson Hyperlegible'} fontSize={50} fill={'#FFFFFF'}>
+        Top 10 Exoplanets
+      </Txt>
+    </Rect>
+  );
+
+  const gravityLatex = createRef<Layout>();
+
   view.add(
     <Rect ref={gravityLatex}>
       <Latex
@@ -277,6 +289,25 @@ export default makeScene2D(function* (view) {
     height={200} // height and width can calculate based on each other
     />,
   );
+
+  const topTenList = createRef<Rect>();
+
+  view.add(
+    <Rect layout fill={'#77B2BA'} padding={20} direction={'column'} alignItems={'center'} textAlign={'center'} opacity={0} ref={topTenList}>
+      <Txt fontFamily={'Atkinson Hyperlegible'} fontSize={50} fill={'#FFFFFF'}> 
+        K2-18 b &#10;
+        K2-18 b &#10;
+        K2-3 d &#10;
+        LHS 1140 b &#10;
+        K2-18 b &#10;
+        LHS 1140 b &#10;
+        Kepler-1661 b &#10;
+        Kepler-22 b &#10;
+        TOI-2285 b &#10;
+        LP 890-9 c
+      </Txt>
+    </Rect>
+  );
   
   yield* slideTransition(Direction.Right);
   yield* questionGrowyRect().height(320,0.5);
@@ -404,4 +435,13 @@ export default makeScene2D(function* (view) {
   yield* indexTitleRect().y(-500, 0.5)
 
   yield* indexExplanation().opacity(1, 0.5)
+
+  yield* beginSlide('Top 10 Exoplanets');
+
+  yield* indexExplanation().opacity(0, 0.5)
+
+  yield* indexTitleRect().y(-580, 0.5)
+  yield* topTenTitleRect().y(-500, 0.5)
+
+  yield* topTenList().opacity(1, 0.5)
 });
