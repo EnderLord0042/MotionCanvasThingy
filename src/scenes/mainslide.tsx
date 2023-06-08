@@ -136,6 +136,15 @@ export default makeScene2D(function* (view) {
   const combinedEquation = createRef<Latex>();
   const combinedEquation2 = createRef<Latex>();
   const planetEarthRatio = createRef<Latex>();
+  const indexTitleRect = createRef<Rect>();
+  
+  view.add(
+    <Rect layout fill={'#77B2BA'} padding={10} y={-580} ref={indexTitleRect}>
+      <Txt fontFamily={'Atkinson Hyperlegible'} fontSize={50} fill={'#FFFFFF'}>
+        Index
+      </Txt>
+    </Rect>
+  );
 
   view.add(
     <Rect ref={gravityLatex}>
@@ -213,6 +222,33 @@ export default makeScene2D(function* (view) {
       />,
     </Rect>
   );
+
+  const distanceExplanation = createRef<Txt>();
+
+  view.add(
+    <Txt fontFamily={'Atkinson Hyperlegible'} fontSize={100} opacity={0} fill={'#FFFFFF'} textAlign={'center'} ref={distanceExplanation}> 
+      1 Parsec = 3.261 Light Years
+    </Txt>
+  );
+
+  const waterExplanation = createRef<Txt>();
+
+  view.add(
+    <Txt fontFamily={'Atkinson Hyperlegible'} fontSize={100} opacity={0} fill={'#FFFFFF'} textAlign={'center'} ref={waterExplanation}> 
+      250 K - 373 K
+    </Txt>
+  );
+
+  const indexExplanation = createRef<Latex>();
+
+  view.add(
+    <Latex
+    opacity={0}
+    ref={indexExplanation}
+    tex="{\color{white} \left| 1-g \right|\cdot d}"
+    height={200} // height and width can calculate based on each other
+    />,
+  );
   
   yield* slideTransition(Direction.Right);
   yield* questionGrowyRect().height(320,0.5);
@@ -285,7 +321,23 @@ export default makeScene2D(function* (view) {
   yield* gravityTitleRect().y(-580, 0.5)
   yield* distanceTitleRect().y(-500, 0.5)
 
+  yield* distanceExplanation().opacity(1, 0.5)
+
   yield* beginSlide('Right temperature for liquid water');
+
+  yield* distanceExplanation().opacity(0, 0.5)
+
   yield* distanceTitleRect().y(-580, 0.5)
   yield* waterTitleRect().y(-500, 0.5)
+
+  yield* waterExplanation().opacity(1, 0.5)
+
+  yield* beginSlide('Index');
+
+  yield* waterExplanation().opacity(0, 0.5)
+
+  yield* waterTitleRect().y(-580, 0.5)
+  yield* indexTitleRect().y(-500, 0.5)
+
+  yield* indexExplanation().opacity(1, 0.5)
 });
