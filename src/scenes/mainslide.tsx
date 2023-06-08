@@ -135,7 +135,9 @@ export default makeScene2D(function* (view) {
   const subbedGravEquation = createRef<Latex>();
   const combinedEquation = createRef<Latex>();
   const combinedEquation2 = createRef<Latex>();
-  const planetEarthRatio = createRef<Latex>();
+  const planetEarthRatio1 = createRef<Latex>();
+  const planetEarthRatio2 = createRef<Latex>();
+  const planetEarthRatio3 = createRef<Rect>();
   const indexTitleRect = createRef<Rect>();
   
   view.add(
@@ -208,18 +210,44 @@ export default makeScene2D(function* (view) {
       ref={combinedEquation2}
       tex="{\color{white} a=G\frac{m_{p}}{{r_{p}}^{2}}}"
       opacity={0}
-      y={200}
-      x={-500}
+      position={[0,50]}
       width={400} // height and width can calculate based on each other
       />,
       <Latex
-      ref={planetEarthRatio}
-      tex="{\color{white} \frac{G\frac{m_{p}}{{r_{p}}^{2}}}{G\frac{m_{e}}{{r_{e}}^{2}}}=\frac{\frac{m_{p}}{{r_{p}}^{2}}}{1}=\frac{m_{p}}{{r_{p}}^{2}}}"
+      ref={planetEarthRatio1}
+      tex="{\color{white} \frac{G\frac{m_{p}}{{r_{p}}^{2}}}{G\frac{m_{e}}{{r_{e}}^{2}}}}"
       opacity={0}
-      y={200}
-      x={500}
+      position={[-260,250]}
+      scale={0.6}
       width={400} // height and width can calculate based on each other
       />,
+      <Latex
+      ref={planetEarthRatio2}
+      tex="{\color{white} =\frac{\frac{m_{p}}{{r_{p}}^{2}}}{1}}"
+      opacity={0}
+      position={[40,230]}
+      scale={0.7}
+      width={400} // height and width can calculate based on each other
+      />,
+      <Rect
+      ref={planetEarthRatio3}
+      position={[100,0]}
+      opacity={0}
+      >
+        <Latex
+        tex="{\color{white} =}"
+        position={[130,264]}
+        scale={1}
+        width={80} // height and width can calculate based on each other
+        />,
+        <Latex
+        tex="{\color{white} \frac{m_{p}}{{r_{p}}^{2}}}"
+        opacity={100}
+        position={[280,280]}
+        scale={0.5}
+        width={400} // height and width can calculate based on each other
+        />,
+      </Rect>
     </Rect>
   );
 
@@ -311,6 +339,42 @@ export default makeScene2D(function* (view) {
 
   yield combinedEquation().opacity(1,0.6);
   yield* combinedEquation().position.y(200,0.6);
+
+
+  yield* beginSlide('Combined Equation 2');
+
+  yield fmaEquation().opacity(0,0.6);
+  yield fmaEquation().position.y(-350,0.6);
+  yield gravEquation().opacity(0,0.6);
+  yield gravEquation().position.y(-330,0.6);
+  yield subbedFmaEquation().opacity(0,0.6);
+  yield subbedFmaEquation().position.y(-150,0.6);
+  yield subbedGravEquation().opacity(0,0.6);
+  yield subbedGravEquation().position.y(-130,0.6);
+
+  yield* waitFor(0.2)
+
+  yield combinedEquation().position.y(-300,0.6);
+  yield* waitFor(0.4)
+
+  yield combinedEquation2().position.y(-50,0.6);
+  yield* combinedEquation2().opacity(1,0.6);
+
+
+  yield* beginSlide('Ratio 1');
+
+  yield planetEarthRatio1().position.x(-360,0.6);
+  yield* planetEarthRatio1().opacity(1,0.6);
+
+  yield* beginSlide('Ratio 2');
+
+  yield planetEarthRatio2().position.x(-60,0.6);
+  yield* planetEarthRatio2().opacity(1,0.6);
+
+  yield* beginSlide('Ratio 3');
+
+  yield planetEarthRatio3().position.x(0,0.6);
+  yield* planetEarthRatio3().opacity(1,0.6);
 
   /* --------- Distance From Earth --------- */
 
